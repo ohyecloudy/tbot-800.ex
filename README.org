@@ -1,6 +1,6 @@
 # -*- mode: org -*-
 # -*- coding: utf-8 -*-
-#+TITLE: [PROJECT_NAME]
+#+TITLE: tbot-800.ex
 #+AUTHOR: Jongbin Oh
 #+EMAIL: ohyecloudy@gmail.com
 
@@ -18,22 +18,3 @@
 
    MIT 라이선스를 따르고 있습니다. =LICENSE= 파일을 참고하세요.
 
-** :construction: 이 템플릿을 복사한 후 해야할 일
-
-*** =.tool-versions= 파일 확인
-
-    + =erlang=, =elixir= 버전
-
-*** =.dialyzer_ignore.exs= 파일
-
-    #+begin_src elixir
-      defmodule MyAwesomeProject do
-        use Mix.Project
-
-        def project do
-          [
-            # ...
-            dialyzer: [ignore_warnings: ".dialyzer_ignore.exs"]
-          ]
-        end
-    #+end_src

@@ -10,7 +10,4 @@ cd "$(dirname "$0")/.."
 
 script/bootstrap
 
-echo "==> Setting up DB..."
-mix do ecto.drop, ecto.create, ecto.migrate
-
 echo "==> App is now ready to go!"
