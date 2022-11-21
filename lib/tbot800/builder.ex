@@ -5,11 +5,11 @@ defmodule Tbot800.Builder do
 
   @tweet_max_length 140
 
-  @spec build_tweet_item(String.t() | nil, String.t(), String.t()) :: String.t()
-  def build_tweet_item(source, item, web_link) do
-    item_with_source = "#{item}#{source_suffix(source)}"
+  @spec build_tweet_item(String.t(), String.t() | nil, String.t()) :: String.t()
+  def build_tweet_item(quotation, origin, web_link) do
+    quotation_with_origin = "#{quotation}#{origin_suffix(origin)}"
 
-    if String.length(item_with_source) > @tweet_max_length do
+    if String.length(quotation_with_origin) > @tweet_max_length do
       link_length = String.length(web_link)
 
       # 1: 빈 칸
@@ -18,27 +18,27 @@ defmodule Tbot800.Builder do
         @tweet_max_length -
           link_length -
           1 -
-          source_reserved_length(source) -
+          origin_reserved_length(origin) -
           3
 
-      "#{String.slice(item, 0, item_length)}...#{source_suffix(source)} #{web_link}"
+      "#{String.slice(quotation, 0, item_length)}...#{origin_suffix(origin)} #{web_link}"
     else
-      item_with_source
+      quotation_with_origin
     end
   end
 
-  defp source_suffix(source) do
-    if source != nil and String.length(source) > 0 do
-      " <#{source}>"
+  defp origin_suffix(origin) do
+    if origin != nil and String.length(origin) > 0 do
+      " <#{origin}>"
     else
       ""
     end
   end
 
-  defp source_reserved_length(source) do
-    if source != nil and String.length(source) > 0 do
+  defp origin_reserved_length(origin) do
+    if origin != nil and String.length(origin) > 0 do
       # <, >, 앞에 빈 칸
-      String.length(source) + 3
+      String.length(origin) + 3
     else
       0
     end
