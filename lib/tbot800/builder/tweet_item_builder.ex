@@ -8,6 +8,9 @@ defmodule Tbot800.Builder.TweetItemBuilder do
 
   @spec build(String.t(), String.t() | nil, String.t()) :: String.t()
   def build(quotation, origin, web_link) do
+    # TODO 한글, 영문에 따라 트윗 캐릭터 계산이 다르다. url도 다름
+    # 그걸 반영해 최대한 많은 글자를 트윗하게 한다
+    # https://developer.twitter.com/en/docs/counting-characters
     quotation_with_origin = "#{quotation}#{origin_suffix(origin)}"
 
     if String.length(quotation_with_origin) > @tweet_max_length do
