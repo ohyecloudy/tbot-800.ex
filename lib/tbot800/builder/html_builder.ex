@@ -33,13 +33,13 @@ defmodule Tbot800.Builder.HtmlBuilder do
 
   require EEx
 
-  @spec build(String.t(), String.t(), String.t()) :: String.t()
-  def build(twitter_account, content, twitter_card_description) do
+  @spec build(String.t(), String.t()) :: String.t()
+  def build(twitter_account, content) do
     EEx.eval_string(@template,
       assigns: [
         twitter_account: twitter_account,
         content: content,
-        twitter_card_description: twitter_card_description
+        twitter_card_description: "트위터 내용 제한으로 트윗에 포함되지 못한 전체 인용구를 확인하세요"
       ]
     )
   end

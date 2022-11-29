@@ -4,7 +4,7 @@ defmodule Tbot800.Builder.HtmlBuilderTest do
   alias Tbot800.Builder.HtmlBuilder
 
   test "build html" do
-    assert HtmlBuilder.build("book_quote_bot", "내용1, 내용2", "트위터 카드에 덧붙일 내용") == """
+    assert HtmlBuilder.build("book_quote_bot", "내용1, 내용2") == """
            <!DOCTYPE html>
            <html lang="en">
            <head>
@@ -13,7 +13,7 @@ defmodule Tbot800.Builder.HtmlBuilderTest do
            <meta content="summary" name="twitter:card">
            <meta content="전체 인용구" name="twitter:title">
            <meta content="@book_quote_bot" name="twitter:creator">
-           <meta content="트위터 카드에 덧붙일 내용" name="twitter:description">
+           <meta content="트위터 내용 제한으로 트윗에 포함되지 못한 전체 인용구를 확인하세요" name="twitter:description">
            <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
            <title>인용구</title>
            </head>
