@@ -10,15 +10,17 @@ defmodule Tbot800.Builder do
           %{quotations: quotation_list} | %{origin: String.t(), quotations: quotation_list}
   @type source_list :: [source]
 
-  def build(sources, twitter_account, base_url) do
-    sources
-    |> flatten()
-    |> build_content()
-    |> build_web_link(base_url)
-    |> build_html(twitter_account)
-    |> build_tweet_items()
+  # TODO 파일로 저장
 
-    # TODO 파일로 저장
+  def build(sources, twitter_account, base_url) do
+    results =
+      sources
+      |> flatten()
+      |> build_content()
+      |> build_web_link(base_url)
+      |> build_tweet_items()
+
+    %{tweet_items: build_tweet_item_list(results)}
   end
 
   def flatten(sources) do
@@ -65,6 +67,12 @@ defmodule Tbot800.Builder do
     |> Enum.map(fn %{quotation: q, origin: o, web_link: w} = s ->
       Map.put(s, :tweet, TweetItemBuilder.build(q, o, w))
     end)
+  end
+
+  defp build_tweet_item_list(sources) do
+    sources
+    |> Enum.map(&Map.get(&1, :tweet))
+    |> inspect
   end
 
   defp calc_hash(content) do
