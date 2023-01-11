@@ -49,7 +49,9 @@ defmodule Tbot800.Builder do
 
     sources
     |> Enum.map(fn %{hash: hash} = s ->
-      Map.put(s, :web_link, base_url <> "/#{hash}.html")
+      s
+      |> Map.put(:web_link, base_url <> "/#{hash}.html")
+      |> Map.put(:html_filename, hash <> ".html")
     end)
   end
 
