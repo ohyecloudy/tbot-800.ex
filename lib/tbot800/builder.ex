@@ -9,19 +9,34 @@ defmodule Tbot800.Builder do
   @type source ::
           %{quotations: quotation_list} | %{origin: String.t(), quotations: quotation_list}
   @type source_list :: [source]
+  @type tweet_item :: String.t()
+  @type webpage :: %{html: String.t(), html_filename: String.t()}
 
+  @spec build(source_list, String.t(), String.t()) :: %{
+          tweet_items: [tweet_item],
+          webpages: [webpage]
+        }
   def build(sources, twitter_account, base_url) do
-    sources
-    |> flatten()
-    |> build_content()
-    |> build_web_link(base_url)
-    |> build_html(twitter_account)
-    |> build_tweet_items()
+    result =
+      sources
+      |> flatten()
+      |> build_content()
+      |> build_web_link(base_url)
+      |> build_html(twitter_account)
+      |> build_tweet_items()
 
-    # TODO 파일로 저장
+    tweet_items =
+      result
+      |> Enum.map(&Map.fetch!(&1, :tweet))
+
+    webpages =
+      result
+      |> Enum.map(&Map.take(&1, [:html, :html_filename]))
+
+    %{tweet_items: tweet_items, webpages: webpages}
   end
 
-  def flatten(sources) do
+  defp flatten(sources) do
     sources
     |> Enum.flat_map(fn
       %{quotations: quotations, origin: origin} ->
