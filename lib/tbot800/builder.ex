@@ -13,8 +13,8 @@ defmodule Tbot800.Builder do
   @type webpage :: %{html: String.t(), html_filename: String.t()}
 
   @spec build(source_list, String.t(), String.t()) :: %{
-          tweet_items: [tweet_item],
-          webpages: [webpage]
+          tweet_items: Enumerable.t(tweet_item()),
+          webpages: Enumerable.t(webpage())
         }
   def build(sources, twitter_account, base_url) do
     result =
@@ -27,18 +27,18 @@ defmodule Tbot800.Builder do
 
     tweet_items =
       result
-      |> Enum.map(&Map.fetch!(&1, :tweet))
+      |> Stream.map(&Map.fetch!(&1, :tweet))
 
     webpages =
       result
-      |> Enum.map(&Map.take(&1, [:html, :html_filename]))
+      |> Stream.map(&Map.take(&1, [:html, :html_filename]))
 
     %{tweet_items: tweet_items, webpages: webpages}
   end
 
   defp flatten(sources) do
     sources
-    |> Enum.flat_map(fn
+    |> Stream.flat_map(fn
       %{quotations: quotations, origin: origin} ->
         Enum.map(quotations, fn q -> %{origin: origin, quotation: q} end)
 
@@ -49,7 +49,7 @@ defmodule Tbot800.Builder do
 
   defp build_content(sources) do
     sources
-    |> Enum.map(fn s ->
+    |> Stream.map(fn s ->
       content = content_builder(s)
       hash = calc_hash(content)
 
@@ -63,7 +63,7 @@ defmodule Tbot800.Builder do
     base_url = String.trim_trailing(base_url, "/")
 
     sources
-    |> Enum.map(fn %{hash: hash} = s ->
+    |> Stream.map(fn %{hash: hash} = s ->
       s
       |> Map.put(:web_link, base_url <> "/#{hash}.html")
       |> Map.put(:html_filename, hash <> ".html")
@@ -72,14 +72,14 @@ defmodule Tbot800.Builder do
 
   defp build_html(sources, twitter_account) do
     sources
-    |> Enum.map(fn %{content: content} = s ->
+    |> Stream.map(fn %{content: content} = s ->
       Map.put(s, :html, HtmlBuilder.build(twitter_account, content))
     end)
   end
 
   defp build_tweet_items(sources) do
     sources
-    |> Enum.map(fn %{quotation: q, origin: o, web_link: w} = s ->
+    |> Stream.map(fn %{quotation: q, origin: o, web_link: w} = s ->
       Map.put(s, :tweet, TweetItemBuilder.build(q, o, w))
     end)
   end
