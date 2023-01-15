@@ -14,7 +14,7 @@ defmodule Tbot800.Builder.TweetItemBuilder do
     quotation_with_origin = "#{quotation}#{origin_suffix(origin)}"
 
     if String.length(quotation_with_origin) > @tweet_max_length do
-      link_length = String.length(web_link)
+      link_length = link_length(web_link)
 
       # 1: 빈 칸
       # 3: ... 줄임
@@ -32,5 +32,15 @@ defmodule Tbot800.Builder.TweetItemBuilder do
     else
       ""
     end
+  end
+
+  defp link_length(_web_link) do
+    # https://developer.twitter.com/en/docs/counting-characters
+    # URLs: All URLs are wrapped in t.co links.
+    # This means a URL’s length is defined by the transformedURLLength parameter
+    # in the twitter-text configuration file. The current length of a URL in a Tweet is 23 characters,
+    # even if the length of the URL would normally be shorter.
+
+    23
   end
 end

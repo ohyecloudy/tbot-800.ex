@@ -23,10 +23,9 @@ defmodule Tbot800.Builder.TweetItemBuilderTest do
 
     result = "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
 가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
-가가가가가가가가가가가가가가가가... http://somelink.com"
+가가가가가가가가가가가가... http://somelink.com"
 
     assert TweetItemBuilder.build(quotation, source, web_link) == result
-    assert String.length(result) == 140
   end
 
   test "build - length of quotation is equal less 140 - empty source" do
@@ -44,9 +43,8 @@ defmodule Tbot800.Builder.TweetItemBuilderTest do
 
     result = "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
 가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
-가가가가가가가가가가가가가가가... http://somelink.com"
+가가가가가가가가가가가... http://somelink.com"
 
     assert TweetItemBuilder.build(quotation, source, web_link) == result
-    assert String.length(result) == 140
   end
 end
