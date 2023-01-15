@@ -18,14 +18,9 @@ defmodule Tbot800.Builder.TweetItemBuilder do
 
       # 1: 빈 칸
       # 3: ... 줄임
-      item_length =
-        @tweet_max_length -
-          link_length -
-          1 -
-          origin_reserved_length(origin) -
-          3
+      item_length = @tweet_max_length - link_length - 1 - 3
 
-      "#{String.slice(quotation, 0, item_length)}...#{origin_suffix(origin)} #{web_link}"
+      "#{String.slice(quotation_with_origin, 0, item_length)}... #{web_link}"
     else
       quotation_with_origin
     end
@@ -36,15 +31,6 @@ defmodule Tbot800.Builder.TweetItemBuilder do
       " <#{origin}>"
     else
       ""
-    end
-  end
-
-  defp origin_reserved_length(origin) do
-    if origin != nil and String.length(origin) > 0 do
-      # <, >, 앞에 빈 칸
-      String.length(origin) + 3
-    else
-      0
     end
   end
 end

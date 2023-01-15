@@ -8,8 +8,9 @@ defmodule Tbot800.Builder.TweetItemBuilderTest do
     source = "somesource"
     web_link = "http://somelink.com"
 
-    result =
-      "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가 <somesource>"
+    result = "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
+가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
+가가가가가가가가가가가가가가가가가가가가가가가 <somesource>"
 
     assert TweetItemBuilder.build(quotation, source, web_link) == result
     assert String.length(result) <= 140
@@ -20,8 +21,9 @@ defmodule Tbot800.Builder.TweetItemBuilderTest do
     source = "somesource"
     web_link = "http://somelink.com"
 
-    result =
-      "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가... <somesource> http://somelink.com"
+    result = "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
+가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
+가가가가가가가가가가가가가가가가... http://somelink.com"
 
     assert TweetItemBuilder.build(quotation, source, web_link) == result
     assert String.length(result) == 140
@@ -40,8 +42,9 @@ defmodule Tbot800.Builder.TweetItemBuilderTest do
     source = nil
     web_link = "http://somelink.com"
 
-    result =
-      "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가... http://somelink.com"
+    result = "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
+가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
+가가가가가가가가가가가가가가가... http://somelink.com"
 
     assert TweetItemBuilder.build(quotation, source, web_link) == result
     assert String.length(result) == 140
