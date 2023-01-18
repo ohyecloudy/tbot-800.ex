@@ -16,7 +16,8 @@ defmodule Tbot800.BuilderTest do
     assert Enum.to_list(tweet_items) == [
              "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
 가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가\
-가가가가가가가가가가가... http://ohrepos.github.io/pquotes-repo/quotes/a9ede5dcf6fb7132f3ef37c6af29abc76dacf9ef.html",
+가가가가가가가가가가가가가가가가가가가가가가가가\
+... http://ohrepos.github.io/pquotes-repo/quotes/a9ede5dcf6fb7132f3ef37c6af29abc76dacf9ef.html",
              "q2 <a>",
              "q3 <b>"
            ]
