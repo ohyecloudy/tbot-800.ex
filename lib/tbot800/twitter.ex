@@ -1,20 +1,15 @@
 defmodule Tbot800.Twitter do
   alias Tbot800.Twitter.OAuth
+  alias Tbot800.Twitter.DefaultImpl
+
+  @behaviour Tbot800.Twitter.Impl
 
   @spec tweet(OAuth.t(), String.t()) :: :ok
   def tweet(oauth, content) do
-    # twitter 계정을 여러개 사용할 수 있어야 한다.
-    # 프로세스 별 oauth 설정을 가질 수 있어서 task를 사용
-    Task.async(fn ->
-      ExTwitter.configure(
-        :process,
-        Map.to_list(oauth)
-      )
+    current_impl().tweet(oauth, content)
+  end
 
-      ExTwitter.update(content)
-    end)
-    |> Task.await()
-
-    :ok
+  def current_impl() do
+    Application.get_env(:tbot_800, :twitter_impl, DefaultImpl)
   end
 end
