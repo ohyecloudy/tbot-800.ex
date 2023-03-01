@@ -1,11 +1,22 @@
 defmodule Tbot800 do
   require Logger
-  alias Tbot800.Builder
+  alias Tbot800.{Builder, Twitter}
+  alias Tbot800.Twitter.OAuth
 
   @type source_loader :: (() -> Builder.source_list())
   @type tweet_items_writer :: (iodata -> :ok)
   @type html_root_dir_maker :: (() -> :ok)
   @type html_file_writer :: (String.t(), iodata -> :ok)
+
+  @spec random_tweet(String.t(), String.t(), String.t(), String.t(), [String.t()]) :: :ok
+  def random_tweet(consumer_key, consumer_secret, access_token, access_token_secret, contents) do
+    Twitter.tweet(
+      OAuth.new(consumer_key, consumer_secret, access_token, access_token_secret),
+      Enum.random(contents)
+    )
+
+    :ok
+  end
 
   def run() do
     {args, []} =

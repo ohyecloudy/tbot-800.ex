@@ -23,7 +23,8 @@ defmodule Tbot800.MixProject do
   defp deps do
     [
       {:dialyxir, "~> 1.2", only: [:dev], runtime: false},
-      {:extwitter, "~> 0.14.0"}
+      {:extwitter, "~> 0.14.0"},
+      {:mox, "~> 1.0", only: :test}
     ]
   end
 end

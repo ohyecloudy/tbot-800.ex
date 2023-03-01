@@ -1,6 +1,10 @@
 defmodule Tbot800.Tbot800Test do
   use ExUnit.Case
 
+  import Mox
+
+  setup :verify_on_exit!
+
   test "build - happy path" do
     Tbot800.build(
       fn ->
@@ -56,5 +60,23 @@ http://ohrepos.github.io/pquotes-repo/quotes/a9ede5dcf6fb7132f3ef37c6af29abc76da
           :ok
       end
     )
+  end
+
+  test "random_tweet - happy path" do
+    tweet_items = ["a", "b", "c"]
+
+    expect(TwitterBehaviourMock, :tweet, fn _oauth, content ->
+      assert content in tweet_items
+
+      :ok
+    end)
+
+    assert Tbot800.random_tweet(
+             "consumer_key",
+             "consumer_secret",
+             "access_token",
+             "access_token_secret",
+             tweet_items
+           ) == :ok
   end
 end
