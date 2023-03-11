@@ -1,7 +1,7 @@
-defmodule Tbot800.Builder.TweetItemBuilderTest do
+defmodule Builder.DefaultImpl.TweetItemBuilderTest do
   use ExUnit.Case
 
-  alias Tbot800.Builder.TweetItemBuilder
+  alias Builder.DefaultImpl.TweetItemBuilder
 
   test "build - length of quotation is equal less 140" do
     quotation = String.duplicate("가", 125)

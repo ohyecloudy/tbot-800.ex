@@ -1,7 +1,7 @@
-defmodule Tbot800.Twitter.DefaultImpl do
-  alias Tbot800.Twitter.OAuth
+defmodule Tbot800.DefaultImpl.Twitter.DefaultImpl do
+  alias Tbot800.DefaultImpl.Twitter.OAuth
 
-  @behaviour Tbot800.Twitter.Impl
+  @behaviour Tbot800.DefaultImpl.Twitter.Impl
 
   @spec tweet(OAuth.t(), String.t()) :: :ok
   def tweet(oauth, content) do

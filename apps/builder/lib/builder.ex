@@ -1,22 +1,15 @@
-defmodule Tbot800 do
+defmodule Builder do
   require Logger
-  alias Tbot800.{Builder, Twitter}
-  alias Tbot800.Twitter.OAuth
+  alias Builder.DefaultImpl
 
-  @type source_loader :: (() -> Builder.source_list())
+  @type quotation_list :: [String.t()]
+  @type source ::
+          %{quotations: quotation_list} | %{origin: String.t(), quotations: quotation_list}
+  @type source_list :: [source]
+  @type source_loader :: (() -> source_list())
   @type tweet_items_writer :: (iodata -> :ok)
   @type html_root_dir_maker :: (() -> :ok)
   @type html_file_writer :: (String.t(), iodata -> :ok)
-
-  @spec random_tweet(String.t(), String.t(), String.t(), String.t(), [String.t()]) :: :ok
-  def random_tweet(consumer_key, consumer_secret, access_token, access_token_secret, contents) do
-    Twitter.tweet(
-      OAuth.new(consumer_key, consumer_secret, access_token, access_token_secret),
-      Enum.random(contents)
-    )
-
-    :ok
-  end
 
   def run() do
     {args, []} =
@@ -66,7 +59,7 @@ defmodule Tbot800 do
     )
 
     %{tweet_items: tweet_items, webpages: webpages} =
-      Builder.build(source_list, twitter_account, html_host_base_url)
+      current_impl().build(source_list, twitter_account, html_host_base_url)
 
     Logger.info("=> call tweet items writer")
 
@@ -120,5 +113,9 @@ defmodule Tbot800 do
       File.write!(path, content, [:binary, :write])
       :ok
     end
+  end
+
+  def current_impl() do
+    DefaultImpl
   end
 end

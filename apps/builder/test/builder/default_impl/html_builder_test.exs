@@ -1,7 +1,7 @@
-defmodule Tbot800.Builder.HtmlBuilderTest do
+defmodule Builder.DefaultImpl.HtmlBuilderTest do
   use ExUnit.Case
 
-  alias Tbot800.Builder.HtmlBuilder
+  alias Builder.DefaultImpl.HtmlBuilder
 
   test "build html" do
     assert HtmlBuilder.build("book_quote_bot", "내용1, 내용2") == """

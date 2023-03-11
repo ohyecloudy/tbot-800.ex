@@ -1,4 +1,7 @@
-defmodule Tbot800.Twitter.OAuth do
+defmodule Tbot800.DefaultImpl.Twitter.OAuth do
+  # Tbot800.DefaultImpl.Twitter.DefaultImpl.OAuth 이게 맞는 것 같다
+  # Tbot800.DefaultImpl.Twitter에서는 접근이 없음
+
   @type t :: %__MODULE__{
           consumer_key: String.t(),
           consumer_secret: String.t(),

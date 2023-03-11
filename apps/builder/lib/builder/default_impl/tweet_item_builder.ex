@@ -1,4 +1,4 @@
-defmodule Tbot800.Builder.TweetItemBuilder do
+defmodule Builder.DefaultImpl.TweetItemBuilder do
   @moduledoc """
   인용구(quotation), 출처(origin), 인용구 페이지가 있는 웹링크를 입력으로
   받아서 140자 이내의 트윗이 가능한 아이템으로 만든다.

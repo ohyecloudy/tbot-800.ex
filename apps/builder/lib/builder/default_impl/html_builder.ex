@@ -1,4 +1,4 @@
-defmodule Tbot800.Builder.HtmlBuilder do
+defmodule Builder.DefaultImpl.HtmlBuilder do
   @template """
   <!DOCTYPE html>
   <html lang="en">

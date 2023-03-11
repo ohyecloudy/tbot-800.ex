@@ -1,9 +1,9 @@
-defmodule Tbot800.Builder do
+defmodule Builder.DefaultImpl do
   @moduledoc """
   인용구 소스를 입력으로 받아 HTML 페이지와 읽어서 바로 트윗할 데이터를 만든다.
   """
 
-  alias Tbot800.Builder.{HtmlBuilder, TweetItemBuilder}
+  alias Builder.DefaultImpl.{HtmlBuilder, TweetItemBuilder}
 
   @type quotation_list :: [String.t()]
   @type source ::
