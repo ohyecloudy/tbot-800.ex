@@ -1,6 +1,6 @@
 defmodule Tbot800.DefaultImpl.Twitter do
+  alias Tbot800.DefaultImpl.OAuth
   alias Tbot800.DefaultImpl.Twitter.DefaultImpl
-  alias Tbot800.DefaultImpl.Twitter.OAuth
 
   @behaviour Tbot800.DefaultImpl.Twitter.Impl
 
