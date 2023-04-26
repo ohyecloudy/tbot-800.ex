@@ -24,3 +24,5 @@ tbot_800-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+dev.secret.exs
