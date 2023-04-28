@@ -1,4 +1,6 @@
 defmodule Tbot800.DefaultImpl.TwitterProcess do
+  require Logger
+
   alias Tbot800.DefaultImpl.Twitter
   alias __MODULE__.State
 
@@ -59,6 +61,7 @@ defmodule Tbot800.DefaultImpl.TwitterProcess do
 
   defp refresh_remain_tweet_items(state, remain) do
     if remain == [] do
+      Logger.info("shuffle: #{Enum.count(state.tweet_items)} tweets")
       %{state | remain_tweet_items: Enum.shuffle(state.tweet_items)}
     else
       %{state | remain_tweet_items: remain}
