@@ -13,6 +13,6 @@ defmodule Tbot800.DefaultImpl.Twitter do
   end
 
   defp current_impl() do
-    Application.get_env(:tbot_800, :twitter_impl, DefaultImpl)
+    Application.get_env(:tbot800, :twitter_impl, DefaultImpl)
   end
 end
