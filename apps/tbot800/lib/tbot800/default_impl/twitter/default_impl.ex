@@ -1,4 +1,5 @@
 defmodule Tbot800.DefaultImpl.Twitter.DefaultImpl do
+  require Logger
   alias Tbot800.DefaultImpl.OAuth
 
   @behaviour Tbot800.DefaultImpl.Twitter.Impl
@@ -13,7 +14,12 @@ defmodule Tbot800.DefaultImpl.Twitter.DefaultImpl do
         Map.to_list(oauth)
       )
 
-      ExTwitter.update(content)
+      try do
+        ExTwitter.update(content)
+      rescue
+        e ->
+          Logger.error(e)
+      end
     end)
     |> Task.await()
 
