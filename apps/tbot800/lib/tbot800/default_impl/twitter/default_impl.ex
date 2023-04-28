@@ -19,6 +19,7 @@ defmodule Tbot800.DefaultImpl.Twitter.DefaultImpl do
       rescue
         e ->
           Logger.error(e)
+          Sentry.capture_exception(e, stacktrace: __STACKTRACE__, extra: %{tweet: content})
       end
     end)
     |> Task.await()

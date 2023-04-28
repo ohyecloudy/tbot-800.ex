@@ -25,6 +25,10 @@ if accounts != [] do
   config :tbot800, tbot_accounts: accounts
 end
 
+if sentry_dsn = System.get_env("SENTRY_DSN") do
+  config :sentry, dsn: sentry_dsn
+end
+
 # 개발 편의가 필요할 때는 dev.secret.exs 같은 파일에 아래와 같은 설정을 넣어서 실행한다
 # config :tbot800,
 #   tbot_accounts: [
