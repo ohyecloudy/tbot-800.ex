@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# script/quote-build: build quotes to tweet with tbot800
+#
+# ex)
+# script/quote-build priv/source_list.exs\
+#     ohyecloudy\
+#     http://ohrepos.github.io/pquotes-repo/quotes/\
+#     priv/tweet_items.exs\
+#     quotes
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+script/update
+
+cd apps/builder
+
+mix run -e "Builder.run" -- \
+    --source-path $1\
+    --twitter-account $2\
+    --html-host-base-url $3\
+    --output-tweet-items-path $4\
+    --output-html-root-dir $5
