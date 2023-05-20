@@ -1,22 +1,15 @@
 defmodule TwitterService do
+  alias TwitterService.Impl
+  alias TwitterService.DefaultImpl
+
+  @behaviour Impl
+
+  @spec update_status(String.t(), Impl.oauth()) :: :ok | {:error, any}
   def update_status(tweet, oauth) do
-    url = "https://api.twitter.com/1.1/statuses/update.json"
-    creds = OAuther.credentials(oauth)
+    impl().update_status(tweet, oauth)
+  end
 
-    params =
-      OAuther.sign(
-        "post",
-        url,
-        [{"status", tweet}],
-        creds
-      )
-
-    {header, req_params} = OAuther.header(params)
-
-    :hackney.post(
-      url,
-      [header],
-      {:form, req_params}
-    )
+  defp impl() do
+    DefaultImpl
   end
 end
