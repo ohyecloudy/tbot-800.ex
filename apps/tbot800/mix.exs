@@ -26,11 +26,11 @@ defmodule Tbot800.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:extwitter, "~> 0.14.0"},
       {:sentry, "~> 8.0"},
       {:jason, "~> 1.1"},
       {:hackney, "~> 1.8"},
-      {:mox, "~> 1.0", only: :test}
+      {:mox, "~> 1.0", only: :test},
+      {:twitter_service, in_umbrella: true}
     ]
   end
 end

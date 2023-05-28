@@ -6,24 +6,16 @@ defmodule Tbot800.DefaultImpl.Twitter.DefaultImpl do
 
   @spec tweet(OAuth.t(), String.t()) :: :ok
   def tweet(oauth, content) do
-    # twitter 계정을 여러개 사용할 수 있어야 한다.
-    # 프로세스 별 oauth 설정을 가질 수 있어서 task를 사용
-    Task.async(fn ->
-      ExTwitter.configure(
-        :process,
-        Map.to_list(oauth)
-      )
+    oauth = oauth |> Map.from_struct() |> Map.to_list()
 
-      try do
-        ExTwitter.update(content)
-      rescue
-        e ->
-          Logger.error(e)
-          Sentry.capture_exception(e, stacktrace: __STACKTRACE__, extra: %{tweet: content})
-      end
-    end)
-    |> Task.await()
+    case TwitterService.update_status(content, oauth) do
+      :ok ->
+        :ok
 
-    :ok
+      e ->
+        Logger.error(insepct(e))
+        Sentry.capture_message(e, extra: %{tweet: content})
+        :ok
+    end
   end
 end
