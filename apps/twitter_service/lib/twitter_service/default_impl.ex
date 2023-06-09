@@ -1,31 +1,29 @@
 defmodule TwitterService.DefaultImpl do
+  use Tesla
+
   alias TwitterService.Impl
+  alias TwitterService.DefaultImpl.Oauth1
 
   @behaviour Impl
 
   @spec update_status(String.t(), Impl.oauth()) :: :ok | {:error, any}
   def update_status(tweet, oauth) do
-    url = "https://api.twitter.com/1.1/statuses/update.json"
-    creds = OAuther.credentials(oauth)
+    case client(oauth) |> Tesla.post("/tweets", %{text: tweet}) do
+      {:ok, %{status: status}} when status >= 200 and status < 300 ->
+        :ok
 
-    params =
-      OAuther.sign(
-        "post",
-        url,
-        [{"status", tweet}],
-        creds
-      )
-
-    {header, req_params} = OAuther.header(params)
-
-    case :hackney.post(
-           url,
-           [header],
-           {:form, req_params}
-         ) do
-      {:ok, 200, _result} -> :ok
-      {:ok, code, result} -> {:error, {code, result}}
-      err -> err
+      other ->
+        {:error, other}
     end
+  end
+
+  defp client(oauth) do
+    middleware = [
+      {Tesla.Middleware.BaseUrl, "https://api.twitter.com/2"},
+      Tesla.Middleware.JSON,
+      {Oauth1, oauth}
+    ]
+
+    Tesla.client(middleware)
   end
 end

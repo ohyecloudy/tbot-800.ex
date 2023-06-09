@@ -17,4 +17,6 @@ import Config
 #       metadata: [:user_id]
 #
 
+config :tesla, adapter: {Tesla.Adapter.Hackney, [recv_timeout: 30_000]}
+
 import_config "#{Mix.env()}.exs"

@@ -26,6 +26,8 @@ defmodule TwitterService.MixProject do
   defp deps do
     [
       {:oauther, "~> 1.3"},
+      {:tesla, "~> 1.7"},
+      {:jason, "~> 1.4"},
       {:hackney, "~> 1.18"}
     ]
   end

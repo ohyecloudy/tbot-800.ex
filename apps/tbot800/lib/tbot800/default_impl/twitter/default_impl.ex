@@ -13,8 +13,8 @@ defmodule Tbot800.DefaultImpl.Twitter.DefaultImpl do
         :ok
 
       e ->
-        Logger.error(insepct(e))
-        Sentry.capture_message(e, extra: %{tweet: content})
+        Logger.error(inspect(e))
+        Sentry.capture_message(inspect(e))
         :ok
     end
   end
