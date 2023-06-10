@@ -27,8 +27,6 @@ defmodule Tbot800.MixProject do
   defp deps do
     [
       {:sentry, "~> 8.0"},
-      {:jason, "~> 1.1"},
-      {:hackney, "~> 1.8"},
       {:mox, "~> 1.0", only: :test},
       {:twitter_service, in_umbrella: true}
     ]
