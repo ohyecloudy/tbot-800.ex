@@ -7,7 +7,11 @@ defmodule Tbot800.DefaultImpl.TwitterProcess do
   use GenServer
 
   defmodule State do
-    defstruct oauth: nil, tweet_items: [], mode: :periodic, interval: 0, remain_tweet_items: []
+    defstruct oauth: nil,
+              tweet_item_loader_func: nil,
+              mode: :periodic,
+              interval: 0,
+              remain_tweet_items: []
   end
 
   def start_link(args) when is_list(args) do
@@ -23,7 +27,7 @@ defmodule Tbot800.DefaultImpl.TwitterProcess do
     state =
       %State{
         oauth: Keyword.fetch!(args, :oauth),
-        tweet_items: Keyword.fetch!(args, :tweet_items),
+        tweet_item_loader_func: Keyword.fetch!(args, :tweet_item_loader_func),
         mode: Keyword.fetch!(args, :mode),
         interval: Keyword.fetch!(args, :interval)
       }
@@ -61,8 +65,9 @@ defmodule Tbot800.DefaultImpl.TwitterProcess do
 
   defp refresh_remain_tweet_items(state, remain) do
     if remain == [] do
-      Logger.info("shuffle: #{Enum.count(state.tweet_items)} tweets")
-      %{state | remain_tweet_items: Enum.shuffle(state.tweet_items)}
+      tweet_items = state.tweet_item_loader_func.()
+      Logger.info("shuffle: #{Enum.count(tweet_items)} tweets")
+      %{state | remain_tweet_items: Enum.shuffle(tweet_items)}
     else
       %{state | remain_tweet_items: remain}
     end

@@ -18,11 +18,17 @@ defmodule Tbot800.DefaultImpl.TwitterProcessTest do
     end)
 
     tweet_items = ["a", "b", "c"]
+    tweet_item_loader_func = fn -> tweet_items end
 
     pid =
       start_supervised!(
         {TwitterProcess,
-         [mode: :manual, interval: 0, oauth: "NOT USED", tweet_items: tweet_items]}
+         [
+           mode: :manual,
+           interval: 0,
+           oauth: "NOT USED",
+           tweet_item_loader_func: tweet_item_loader_func
+         ]}
       )
 
     TwitterProcess.tweet_next(pid)

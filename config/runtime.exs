@@ -14,7 +14,7 @@ accounts =
       access_token_secret: System.get_env("ACCOUNT#{index}_TOKEN_SECRET"),
       interval:
         String.to_integer(System.get_env("ACCOUNT#{index}_INTERVAL_MINUTE", "60")) * 1000 * 60,
-      tweet_items_path: System.get_env("ACCOUNT#{index}_TWEET_ITEMS_PATH")
+      tweet_items_url: System.get_env("ACCOUNT#{index}_TWEET_ITEMS_URL")
     ]
   end)
   |> Enum.take_while(fn account ->
@@ -38,7 +38,7 @@ end
 #       access_token: "access_token",
 #       access_token_secret: "access_token_secret",
 #       interval: 1000 * 60 * 60,
-#       tweet_items_path: "pqoutes.exs"
+#       tweet_items_url: "http://ohrepos.github.io/pquotes-repo/quotes/tweet_items.exs"
 #     ],
 #     [
 #       consumer_key: "consumer_key",
@@ -46,6 +46,6 @@ end
 #       access_token: "access_token",
 #       access_token_secret: "access_token_secret",
 #       interval: 1000 * 60 * 60,
-#       tweet_items_path: "book_quotes.exs"
+#       tweet_items_url: "http://ohrepos.github.io/quotes-repo/quotes/tweet_items.exs"
 #     ]
 #   ]

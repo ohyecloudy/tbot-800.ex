@@ -1,9 +1,9 @@
-defmodule Tbot800.MixProject do
+defmodule QuotesLoader.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :tbot800,
+      app: :quotes_loader,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -18,18 +18,18 @@ defmodule Tbot800.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
-      mod: {Tbot800.Application, []}
+      extra_applications: [:logger]
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:sentry, "~> 8.0"},
-      {:mox, "~> 1.0", only: :test},
-      {:twitter_service, in_umbrella: true},
-      {:quotes_loader, in_umbrella: true}
+      {:tesla, "~> 1.7"},
+      {:hackney, "~> 1.18"}
+      # {:dep_from_hexpm, "~> 0.3.0"},
+      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+      # {:sibling_app_in_umbrella, in_umbrella: true}
     ]
   end
 end

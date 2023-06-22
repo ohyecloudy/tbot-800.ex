@@ -18,13 +18,19 @@ defmodule Tbot800.DefaultImpl.Supervisor do
     Logger.info("########################################")
 
     tbot_accounts
-    |> Enum.each(fn account -> Logger.info("tweet items path: #{account[:tweet_items_path]}") end)
+    |> Enum.each(fn account -> Logger.info("tweet items url: #{account[:tweet_items_url]}") end)
 
     Logger.info("########################################")
 
     children =
       tbot_accounts
       |> Enum.map(fn account ->
+        url = account[:tweet_items_url]
+
+        tweet_item_loader_func = fn ->
+          QuotesLoader.load_url!(url)
+        end
+
         oauth =
           OAuth.new(
             account[:consumer_key],
@@ -33,11 +39,9 @@ defmodule Tbot800.DefaultImpl.Supervisor do
             account[:access_token_secret]
           )
 
-        {tweet_items, _} = Code.eval_file(account[:tweet_items_path])
-
         [
           oauth: oauth,
-          tweet_items: tweet_items,
+          tweet_item_loader_func: tweet_item_loader_func,
           mode: :periodic,
           interval: account[:interval]
         ]
