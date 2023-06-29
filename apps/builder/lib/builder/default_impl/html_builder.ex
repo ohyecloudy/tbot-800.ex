@@ -9,7 +9,7 @@ defmodule Builder.DefaultImpl.HtmlBuilder do
   <meta content="전체 인용구" name="twitter:title">
   <meta content="@<%= @twitter_account %>" name="twitter:creator">
   <meta content="<%= @twitter_card_description %>" name="twitter:description">
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=<%= @ga4_measurement_id %>"></script>
   <script>
