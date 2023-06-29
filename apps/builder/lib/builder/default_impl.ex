@@ -73,7 +73,7 @@ defmodule Builder.DefaultImpl do
   defp build_html(sources, twitter_account, ga4_measurement_id) do
     sources
     |> Stream.map(fn %{content: content} = s ->
-      Map.put(s, :html, HtmlBuilder.build(twitter_account, content))
+      Map.put(s, :html, HtmlBuilder.build(twitter_account, content, ga4_measurement_id))
     end)
   end
 

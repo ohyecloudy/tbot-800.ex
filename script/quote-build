@@ -5,7 +5,7 @@
 # ex)
 # script/quote-build priv/source_list.exs\
 #     ohyecloudy\
-#     http://ohrepos.github.io/pquotes-repo/quotes/\
+#     https://ohrepos.github.io/pquotes-repo/quotes/\
 #     GA4_MEASUREMENT_ID\
 #     priv/tweet_items.exs\
 #     quotes

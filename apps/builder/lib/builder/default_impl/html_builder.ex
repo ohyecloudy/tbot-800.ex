@@ -48,7 +48,7 @@ defmodule Builder.DefaultImpl.HtmlBuilder do
       assigns: [
         twitter_account: twitter_account,
         content: content,
-        ga4_measurement_id: ga4_measurement_id
+        ga4_measurement_id: ga4_measurement_id,
         twitter_card_description: "트위터 내용 제한으로 트윗에 포함되지 못한 전체 인용구를 확인하세요"
       ]
     )
