@@ -15,7 +15,7 @@ defmodule Tbot800.DefaultImpl.Twitter.DefaultImpl do
 
       {:error, {:ok, %{body: %{"detail" => detail}}}} = e ->
         Logger.error(inspect(e))
-        Sentry.capture_message(detail, %{extra: e, fingerprint: detail})
+        Sentry.capture_message(detail, extra: e, fingerprint: detail)
         :ok
 
       e ->
