@@ -18,6 +18,7 @@ defmodule Builder do
           source_path: :string,
           twitter_account: :string,
           html_host_base_url: :string,
+          ga4_measurement_id: :string,
           output_tweet_items_path: :string,
           output_html_root_dir: :string
         ]
@@ -27,6 +28,7 @@ defmodule Builder do
       source_loader_func(args[:source_path]),
       args[:twitter_account],
       args[:html_host_base_url],
+      args[:ga4_measurement_id],
       tweet_items_writer_func(args[:output_tweet_items_path]),
       html_root_dir_maker_func(args[:output_html_root_dir]),
       html_file_writer_func(args[:output_html_root_dir])
@@ -37,6 +39,7 @@ defmodule Builder do
           source_loader,
           String.t(),
           String.t(),
+          String.t(),
           tweet_items_writer,
           html_root_dir_maker,
           html_file_writer
@@ -45,6 +48,7 @@ defmodule Builder do
         source_loader,
         twitter_account,
         html_host_base_url,
+        ga4_measurement_id,
         tweet_items_writer,
         html_root_dir_maker,
         html_file_writer
@@ -59,7 +63,7 @@ defmodule Builder do
     )
 
     %{tweet_items: tweet_items, webpages: webpages} =
-      current_impl().build(source_list, twitter_account, html_host_base_url)
+      current_impl().build(source_list, twitter_account, html_host_base_url, ga4_measurement_id)
 
     Logger.info("=> call tweet items writer")
 

@@ -10,6 +10,15 @@ defmodule Builder.DefaultImpl.HtmlBuilder do
   <meta content="@<%= @twitter_account %>" name="twitter:creator">
   <meta content="<%= @twitter_card_description %>" name="twitter:description">
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= @ga4_measurement_id %>"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '<%= @ga4_measurement_id %>');
+  </script>
   <title>인용구</title>
   </head>
   <body>
@@ -33,12 +42,13 @@ defmodule Builder.DefaultImpl.HtmlBuilder do
 
   require EEx
 
-  @spec build(String.t(), String.t()) :: String.t()
-  def build(twitter_account, content) do
+  @spec build(String.t(), String.t(), String.t()) :: String.t()
+  def build(twitter_account, content, ga4_measurement_id) do
     EEx.eval_string(@template,
       assigns: [
         twitter_account: twitter_account,
         content: content,
+        ga4_measurement_id: ga4_measurement_id
         twitter_card_description: "트위터 내용 제한으로 트윗에 포함되지 못한 전체 인용구를 확인하세요"
       ]
     )

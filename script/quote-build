@@ -6,6 +6,7 @@
 # script/quote-build priv/source_list.exs\
 #     ohyecloudy\
 #     http://ohrepos.github.io/pquotes-repo/quotes/\
+#     GA4_MEASUREMENT_ID\
 #     priv/tweet_items.exs\
 #     quotes
 
@@ -21,5 +22,6 @@ mix run -e "Builder.run" -- \
     --source-path $1\
     --twitter-account $2\
     --html-host-base-url $3\
-    --output-tweet-items-path $4\
-    --output-html-root-dir $5
+    --ga4-measurement-id $4\
+    --output-tweet-items-path $5\
+    --output-html-root-dir $6

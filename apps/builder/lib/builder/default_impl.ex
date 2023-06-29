@@ -12,17 +12,17 @@ defmodule Builder.DefaultImpl do
   @type tweet_item :: String.t()
   @type webpage :: %{html: String.t(), html_filename: String.t()}
 
-  @spec build(source_list, String.t(), String.t()) :: %{
+  @spec build(source_list, String.t(), String.t(), String.t()) :: %{
           tweet_items: Enumerable.t(tweet_item()),
           webpages: Enumerable.t(webpage())
         }
-  def build(sources, twitter_account, base_url) do
+  def build(sources, twitter_account, base_url, ga4_measurement_id) do
     result =
       sources
       |> flatten()
       |> build_content()
       |> build_web_link(base_url)
-      |> build_html(twitter_account)
+      |> build_html(twitter_account, ga4_measurement_id)
       |> build_tweet_items()
 
     tweet_items =
@@ -70,7 +70,7 @@ defmodule Builder.DefaultImpl do
     end)
   end
 
-  defp build_html(sources, twitter_account) do
+  defp build_html(sources, twitter_account, ga4_measurement_id) do
     sources
     |> Stream.map(fn %{content: content} = s ->
       Map.put(s, :html, HtmlBuilder.build(twitter_account, content))
