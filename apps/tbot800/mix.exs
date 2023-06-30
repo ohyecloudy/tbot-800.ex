@@ -28,6 +28,7 @@ defmodule Tbot800.MixProject do
     [
       {:sentry, "~> 8.0"},
       {:mox, "~> 1.0", only: :test},
+      {:faker, "~> 0.17.0", only: :test},
       {:twitter_service, in_umbrella: true},
       {:quotes_loader, in_umbrella: true}
     ]

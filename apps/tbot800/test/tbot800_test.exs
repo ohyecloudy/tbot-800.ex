@@ -16,10 +16,10 @@ defmodule Tbot800Test do
     end)
 
     assert Tbot800.random_tweet(
-             "consumer_key",
-             "consumer_secret",
-             "access_token",
-             "access_token_secret",
+             Faker.String.base64(30),
+             Faker.String.base64(30),
+             Faker.String.base64(30),
+             Faker.String.base64(30),
              tweet_items
            ) == :ok
   end
