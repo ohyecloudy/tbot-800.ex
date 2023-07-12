@@ -7,7 +7,7 @@ defmodule Tbot800.DefaultImpl.Twitter.DefaultImpl do
   @spec tweet(OAuth.t(), String.t()) :: :ok
   def tweet(oauth, content) do
     oauth = oauth |> Map.from_struct() |> Map.to_list()
-    Sentry.Context.add_breadcrumb(tweet: content)
+    Sentry.Context.add_breadcrumb(message: content)
 
     case TwitterService.update_status(content, oauth) do
       :ok ->
