@@ -6,6 +6,8 @@
 
 인용구를 일정 주기로 트위하는 봇. [[https://twitter.com/book_quote_bot][@book_quote_bot]], [[https://twitter.com/bquote_bot][@bquote_bot]] 계정에서 사용하고 있다.
 
+개발 후기는 '[[http://ohyecloudy.com/pnotes/archives/tbot-800-ex/][10년 전에 Clojure로 짠 트위터 인용봇을 Elixir로 재작성한 후기 - ohyecloudy.com]]' 글을 참고.
+
 ** :rocket: 시작하기 (Getting Started)
 
    두 과정을 거쳐서 인용구를 트윗한다
