@@ -7,7 +7,16 @@ defmodule Tbot800Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      dialyzer: [ignore_warnings: ".dialyzer_ignore.exs"]
+      dialyzer: [ignore_warnings: ".dialyzer_ignore.exs"],
+      releases: [
+        tbot800: [
+          applications: [
+            runtime_tools: :permanent,
+            tbot800: :permanent
+          ],
+          include_executables_for: [:unix]
+        ]
+      ]
     ]
   end
 
