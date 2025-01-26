@@ -136,6 +136,7 @@ jobs:
       - name: Deploy via scp
         uses: appleboy/scp-action@v0.1.7
         with:
+          username: ${{ secrets.USER }}
           host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
           source: "_build/prod/rel/tbot800"
