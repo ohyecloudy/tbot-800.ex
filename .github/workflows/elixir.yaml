@@ -140,4 +140,4 @@ jobs:
           host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
           source: "_build/prod/rel/tbot800"
-          target: "/app"
+          target: ${{ secrets.APP_DIR }}
