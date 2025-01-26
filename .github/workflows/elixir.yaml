@@ -132,3 +132,11 @@ jobs:
 
       - name: Release
         run: script/release
+
+      - name: Deploy via scp
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.KEY }}
+          source: "_build/prod/rel/tbot800"
+          target: "/app"
