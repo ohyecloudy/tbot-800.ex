@@ -143,4 +143,4 @@ jobs:
           key: ${{ secrets.KEY }}
           source: _build/prod/rel/tbot800/*
           target: ${{ secrets.APP_DIR }}
-          strip_components: 1
+          strip_components: 4
