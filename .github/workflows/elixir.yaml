@@ -13,7 +13,6 @@ on:
   pull_request:
     branches: ["*"] # adapt branch for project
 
-
 env:
   USE_GLOBAL_ELIXIR: true
 
