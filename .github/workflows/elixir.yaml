@@ -141,5 +141,5 @@ jobs:
           username: ${{ secrets.USER }}
           host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
-          source: "_build/prod/rel/tbot800/"
+          source: _build/prod/rel/tbot800/*
           target: ${{ secrets.APP_DIR }}
