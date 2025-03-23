@@ -13,9 +13,8 @@ if [ -n "$1" ]; then
   # use first argument as an environment name. Use this to decide how to show
   # the appropriate log.
   if [ "$1" = "production" ] || [ "$1" = "prod" ]; then
-    # ssh tbot800-prod "journalctl -u tbot800 -f"
-    echo "NOT IMPLEMENTED"
-    exit 1
+    ssh tbot800-prod "journalctl -u tbot800 -f"
+    exit 0
   elif [ "$1" = "staging" ] || [ "$1" = "stag" ]; then
     # ssh tbot800-stag "journalctl -u tbot800 -f"
     echo "NOT IMPLEMENTED"
@@ -25,5 +24,6 @@ if [ -n "$1" ]; then
     exit 1
   fi
 else
-  tail -f logs/APP.log
+  echo "NOT IMPLEMENTED"
+  exit 1
 fi
