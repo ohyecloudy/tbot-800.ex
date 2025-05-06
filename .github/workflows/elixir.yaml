@@ -165,7 +165,7 @@ jobs:
             sh -c "ERL_FLAGS=\"+JMsingle true\" script/release"
 
       - name: Deploy via scp
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           username: ${{ secrets.USER }}
           host: ${{ secrets.HOST }}
