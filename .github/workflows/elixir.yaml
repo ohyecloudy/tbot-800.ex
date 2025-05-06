@@ -164,6 +164,18 @@ jobs:
             $IMAGE_TAG \
             sh -c "ERL_FLAGS=\"+JMsingle true\" script/release"
 
+      - name: Stop tbot800 service
+        uses: appleboy/ssh-action@v1.2.2
+        env:
+          APP_NAME: ${{ secrets.APP_NAME }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          envs: APP_NAME
+          script: |
+            sudo systemctl stop $APP_NAME
+
       - name: Deploy via scp
         uses: appleboy/scp-action@v1.0.0
         with:
@@ -173,3 +185,15 @@ jobs:
           source: _build/prod/rel/tbot800/*
           target: ${{ secrets.APP_DIR }}
           strip_components: 4
+
+      - name: Start tbot800 service
+        uses: appleboy/ssh-action@v1.2.2
+        env:
+          APP_NAME: ${{ secrets.APP_NAME }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          envs: APP_NAME
+          script: |
+            sudo systemctl start $APP_NAME
