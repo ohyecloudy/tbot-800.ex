@@ -95,7 +95,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy ARM64
     needs: test-arm64 # test-arm64 작업이 성공한 경우에만 실행
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -164,17 +164,17 @@ jobs:
             $IMAGE_TAG \
             sh -c "ERL_FLAGS=\"+JMsingle true\" script/release"
 
-      - name: Stop tbot800 service
-        uses: appleboy/ssh-action@v1.2.2
-        env:
-          APP_NAME: ${{ secrets.APP_NAME }}
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.KEY }}
-          envs: APP_NAME
-          script: |
-            sudo systemctl stop $APP_NAME
+      # - name: Stop tbot800 service
+      #   uses: appleboy/ssh-action@v1.2.2
+      #   env:
+      #     APP_NAME: ${{ secrets.APP_NAME }}
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USER }}
+      #     key: ${{ secrets.KEY }}
+      #     envs: APP_NAME
+      #     script: |
+      #       sudo systemctl stop $APP_NAME
 
       - name: Deploy via scp
         uses: appleboy/scp-action@v1.0.0
@@ -186,14 +186,14 @@ jobs:
           target: ${{ secrets.APP_DIR }}
           strip_components: 4
 
-      - name: Start tbot800 service
-        uses: appleboy/ssh-action@v1.2.2
-        env:
-          APP_NAME: ${{ secrets.APP_NAME }}
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.KEY }}
-          envs: APP_NAME
-          script: |
-            sudo systemctl start $APP_NAME
+      # - name: Start tbot800 service
+      #   uses: appleboy/ssh-action@v1.2.2
+      #   env:
+      #     APP_NAME: ${{ secrets.APP_NAME }}
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USER }}
+      #     key: ${{ secrets.KEY }}
+      #     envs: APP_NAME
+      #     script: |
+      #       sudo systemctl start $APP_NAME
