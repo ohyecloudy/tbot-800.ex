@@ -21,12 +21,20 @@ permissions:
   contents: read
 
 jobs:
-  test-arm64:
+  test:
     runs-on: ubuntu-latest
-    name: Test ARM64
+    name: Test
     steps:
+      # Step: Check out the code.
       - name: Checkout code
         uses: actions/checkout@v4
+
+      # Step: Setup Elixir + Erlang image as the base.
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          version-file: .tool-versions
+          version-type: strict
 
       # Step: Define how to cache deps. Restores existing cache if present.
       - name: Cache deps
@@ -55,18 +63,6 @@ jobs:
             ${{ runner.os }}-mix-${{ env.cache-name }}-
             ${{ runner.os }}-mix-
 
-      - name: Set up QEMU for ARM64 emulation
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: arm64
-
-      - name: Get Elixir Docker Image
-        id: build_docker_image_reference
-        run: |
-          IMAGE_TAG=$(script/build_docker_image_reference)
-          echo "Docker image: $IMAGE_TAG"
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
-
       # Step: Conditionally bust the cache when job is re-run.
       # Sometimes, we may have issues with incremental builds that are fixed by
       # doing a full recompile. In order to not waste dev time on such trivial
@@ -76,30 +72,34 @@ jobs:
       - name: Clean to rule out incremental build as a source of flakiness
         if: github.run_attempt != '1'
         run: |
-          docker run --rm --platform linux/arm64 \
-            -v $PWD:/app -w /app \
-            $IMAGE_TAG \
-            sh -c "local.rebar --force;mix local.hex --force;mix deps.clean --all;mix clean"
+          mix deps.clean --all
+          mix clean
+        shell: sh
 
-      # There have been issues in the past with qemu and the Erlang JIT
-      # ERL_FLAGS="+JMsingle true"
-      # https://elixirforum.com/t/multi-platform-docker-image-build-fails/66916/4
-      - name: Run tests for ARM64
-        run: |
-          docker run --rm --platform linux/arm64 \
-            -v $PWD:/app -w /app \
-            $IMAGE_TAG \
-            sh -c "ERL_FLAGS=\"+JMsingle true\" script/cibuild"
+      # Step: Download project dependencies. If unchanged, uses
+      # the cached version.
+      - name: Install dependencies
+        run: mix deps.get
 
-  deploy-arm64:
+      # Step: Execute the tests.
+      - name: Run tests
+        run: script/cibuild
+
+  deploy:
     runs-on: ubuntu-latest
-    name: Deploy ARM64
-    needs: test-arm64 # test-arm64 작업이 성공한 경우에만 실행
+    name: Deploy
+    needs: test # test 작업이 성공한 경우에만 실행
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          version-file: .tool-versions
+          version-type: strict
+
       # Step: Define how to cache deps. Restores existing cache if present.
       - name: Cache deps
         id: cache-deps
@@ -127,18 +127,6 @@ jobs:
             ${{ runner.os }}-mix-${{ env.cache-name }}-
             ${{ runner.os }}-mix-
 
-      - name: Set up QEMU for ARM64 emulation
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: arm64
-
-      - name: Get Elixir Docker Image
-        id: build_docker_image_reference
-        run: |
-          IMAGE_TAG=$(script/build_docker_image_reference)
-          echo "Docker image: $IMAGE_TAG"
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
-
       # Step: Conditionally bust the cache when job is re-run.
       # Sometimes, we may have issues with incremental builds that are fixed by
       # doing a full recompile. In order to not waste dev time on such trivial
@@ -148,21 +136,14 @@ jobs:
       - name: Clean to rule out incremental build as a source of flakiness
         if: github.run_attempt != '1'
         run: |
-          docker run --rm --platform linux/arm64 \
-            -v $PWD:/app -w /app \
-            $IMAGE_TAG \
-            sh -c "local.rebar --force;mix local.hex --force;mix deps.clean --all;mix clean"
+          local.rebar --force
+          mix local.hex --force
+          mix deps.clean --all
+          mix clean
+        shell: sh
 
-      # There have been issues in the past with qemu and the Erlang JIT
-      # ERL_FLAGS="+JMsingle true"
-      # https://elixirforum.com/t/multi-platform-docker-image-build-fails/66916/4
-      - name: Release for ARM64
-        run: |
-          docker run --rm --platform linux/arm64 \
-            -e USE_GLOBAL_ELIXIR=${USE_GLOBAL_ELIXIR}\
-            -v $PWD:/app -w /app \
-            $IMAGE_TAG \
-            sh -c "ERL_FLAGS=\"+JMsingle true\" script/release"
+      - name: Release
+        run: script/release
 
       - name: Stop tbot800 service
         uses: appleboy/ssh-action@v1.2.2
