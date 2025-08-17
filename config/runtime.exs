@@ -49,3 +49,12 @@ end
 #       tweet_items_url: "http://ohrepos.github.io/quotes-repo/quotes/tweet_items.exs"
 #     ]
 #   ]
+
+# 설정 마지막에 외부 설정 파일 로드
+external_config_path = "/etc/opt/tbot800/runtime.exs"
+if File.exists?(external_config_path) do
+  IO.puts("Loading external config from #{external_config_path}")
+  Code.eval_file(external_config_path)
+else
+  IO.puts("No external config found at #{external_config_path}, using default settings")
+end
